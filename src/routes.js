@@ -1,17 +1,30 @@
 const { Router } = require('express');
 
-const PatientController = require('./app/controllers/PatientController');
+const ensureAuthenticated = require('./app/middlewares/ensureAuthenticated');
+const corsAuthorization = require('./app/middlewares/corsAuthorization');
+
+const UserController = require('./app/controllers/UserController');
+const SessionController = require('./app/controllers/SessionController');
 
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.json({ ok: false });
+    res.json({ ok: true });
 });
 
-router.get('/patients', PatientController.index);
-router.post('/patients', PatientController.store);
-router.get('/patients/:id', PatientController.show);
-router.put('/patients/:id', PatientController.update);
-router.delete('/patients/:id', PatientController.delete);
+/* Users */
+router.get('/users', UserController.index);
+router.get('/users/:id', UserController.show);
+router.post('/users', UserController.store);
+
+/* Sessions */
+router.post('/sessions', SessionController.auth);
+
+/* Authenticated Routes */
+router.use(ensureAuthenticated);
+
+/* Users */
+router.put('/users/:id', UserController.update);
+router.delete('/users/:id', UserController.delete);
 
 module.exports = router;
