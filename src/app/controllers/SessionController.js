@@ -16,7 +16,9 @@ class SessionController {
             return res.status(400).json({ error: 'User does not exists.' });
         }
 
-        const passwordMatch = await bcrypt.compareSync(password, user.password);
+        console.log(user);
+
+        const passwordMatch = await bcrypt.compareSync(password, user.senha);
 
         if(!passwordMatch) {
             return res.status(400).json({ error: 'Password is incorrect.' });

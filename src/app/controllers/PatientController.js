@@ -24,7 +24,7 @@ class PatientController {
 
         const patientExists = await PatientsRepository.findByDocument(document);
 
-        if(categoryExists) {
+        if(patientExists) {
             return res.status(400).json({ error: 'Patient already exists' });
         }
 

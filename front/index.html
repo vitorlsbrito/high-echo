@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulário</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <form class="contact_form" action="" method="post" name="contact_form">
+
+        <ul>
+            <li>
+                <h2>Formulário</h2>
+                <span class="required_notification">* Denota campo obrigatório</span>
+            </li>
+
+            <li>
+                <label for="email">Email:</label>
+                <input type="email" name="email" placeholder="fulano_de_tal@gmail.com" required />
+                <span class="form_hint">Formato: "name@provedor.com"</span>
+            </li>
+            <li>
+                <label for="number">CPF:</label>
+                <input type="cpf" name="cpf" placeholder="SEM PONTUAÇÃO" required />
+                <span class="form_hint">Formato: "12345678900"</span>
+            </li>
+            <li>
+                <button class="submit" type="submit">Enviar Formulário</button>
+            </li>
+
+        </ul>
+
+
+    </form>
+
+</body>
+
+</html>

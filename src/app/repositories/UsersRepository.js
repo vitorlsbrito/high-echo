@@ -29,7 +29,7 @@ class UsersRepository {
 
     async store({ name, email, password, admin, active }) {
         const [row] = await db.query(`
-            INSERT INTO dasa_usuarios (nome, email, senha, admin, active)
+            INSERT INTO dasa_usuarios (nome, email, senha, admin, ativo)
             VALUES ($1, $2, $3, $4, $5)
             RETURNING *
         `, [name, email, password, admin, active]);
@@ -39,7 +39,7 @@ class UsersRepository {
 
     async update(id, { name, email, password, admin, active }) {
         const [row] = await db.query(`
-            UPDATE dasa_usuarios SET nome = $1, email = $2, senha = $3, admin = $4, active = $5
+            UPDATE dasa_usuarios SET nome = $1, email = $2, senha = $3, admin = $4, ativo = $5
             WHERE id = $6
             RETURNING *
         `, [name, email, password, admin, active, id]);

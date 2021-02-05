@@ -33,6 +33,8 @@ class UserController {
     async store(req, res) {
         const { name, email, password, admin, active } = req.body;
 
+        console.log(req.body);
+
         const userExists = await UsersRepository.findByEmail(email);
 
         if(userExists) {
