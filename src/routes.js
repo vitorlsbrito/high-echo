@@ -7,6 +7,7 @@ const UserController = require('./app/controllers/UserController');
 const SessionController = require('./app/controllers/SessionController');
 const PatientController = require('./app/controllers/PatientController');
 const ExamController = require('./app/controllers/ExamController');
+const SubscriberController = require('./app/controllers/SubscriberController');
 
 const router = Router();
 
@@ -14,9 +15,16 @@ router.get('/', (req, res) => {
     res.json({ ok: true });
 });
 
+/* Authenticated Routes */
+router.use(corsAuthorization);
 
 /* Sessions */
 router.post('/sessions', SessionController.auth);
+
+/* Subscriber */
+router.get('/subscribers', SubscriberController.index);
+router.get('/subscribers/:id', SubscriberController.show);
+router.post('/subscribers', SubscriberController.store);
 
 /* Authenticated Routes */
 router.use(ensureAuthenticated);
@@ -37,8 +45,6 @@ router.delete('/patients/:pac_cpf', PatientController.delete);
 
 /* Exams */
 /*router.get('/exams', ExamController.index);*/
-router.get('/exams', (req, res) => {
-    Object.keys(req.query).length == 0 ? ExamController.index(req, res) : ExamController.show(req, res);
-});
+router.get('/exams', ExamController.show);
 
 module.exports = router;

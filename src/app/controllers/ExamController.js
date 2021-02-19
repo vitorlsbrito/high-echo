@@ -8,27 +8,29 @@ class ExamController {
     }
 
     async show(req, res) {
-        const { pac_cpf, exa_codigo } = req.query;
+        const { pac_cpf, exa_codigo } = req.body;
 
-        let exam;
-
-        if(pac_cpf && exa_codigo) {
-            exam = await ExamsRepository.findByPatient(pac_cpf);
-
-            const a = exam.map((item) => {
-                if( item.exa_codigo == exa_codigo) { return item; }
-            });
-
-            exam = a;
-        } else if(pac_cpf) {
-            exam = await ExamsRepository.findByPatient(pac_cpf);
-        } else if (exa_codigo) {
-            exam = await ExamsRepository.findByExam(exa_codigo);
-        } else {
-            res.sendStatus(500);
+        if (!pac_cpf || !exa_codigo) {
+            const exams = await ExamsRepository.findAll();
+            return res.json(exams);
         }
 
-        res.json(exam);
+        const exams = await ExamsRepository.findByPatient(pac_cpf);
+
+        let matchedExams;
+
+        exams.map((exam) => {
+            if (exam.exa_codigo == exa_codigo) {
+                matchedExams = exam;
+            }
+        });
+
+        if (!matchedExams) {
+            res.status(400).json({ 'error': 'Has no exam to this patient' });
+        }
+
+
+        res.json(matchedExams);
     }
 
     async showByPatient(req, res) {
